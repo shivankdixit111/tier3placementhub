@@ -38,22 +38,22 @@ export default function Home() {
           Key Features
         </h2>
         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="bg-white shadow-lg rounded-xl p-8 text-center hover:shadow-indigo-300 transition hover:-translate-y-2 transform">
+          <Link className="bg-white shadow-lg rounded-xl p-8 text-center hover:shadow-indigo-300 transition hover:-translate-y-2 transform" href='/ai'>
             <h3 className="text-xl font-bold mb-3 text-indigo-600">AI Preparation Assistant</h3>
             <p className="text-gray-600">Get personalized topic-wise guidance and AI tips for coding, aptitude, and interviews.</p>
-          </div>
-          <div className="bg-white shadow-lg rounded-xl p-8 text-center hover:shadow-purple-300 transition hover:-translate-y-2 transform">
+          </Link>
+          <Link className="bg-white shadow-lg rounded-xl p-8 text-center hover:shadow-purple-300 transition hover:-translate-y-2 transform" href='/companies'>
             <h3 className="text-xl font-bold mb-3 text-purple-600">Company Exam Timeline</h3>
             <p className="text-gray-600">Stay updated with TCS NQT, Infosys INFYTQ, Deloitte NLA schedules and deadlines.</p>
-          </div>
-          <div className="bg-white shadow-lg rounded-xl p-8 text-center hover:shadow-pink-300 transition hover:-translate-y-2 transform">
+          </Link>
+          <Link className="bg-white shadow-lg rounded-xl p-8 text-center hover:shadow-pink-300 transition hover:-translate-y-2 transform" href='/mock'>
             <h3 className="text-xl font-bold mb-3 text-pink-600">Mock Interviews</h3>
             <p className="text-gray-600">Practice real interview questions and track your performance in HR and technical rounds.</p>
-          </div>
-          <div className="bg-white shadow-lg rounded-xl p-8 text-center hover:shadow-indigo-300 transition hover:-translate-y-2 transform">
+          </Link>
+          <Link className="bg-white shadow-lg rounded-xl p-8 text-center hover:shadow-indigo-300 transition hover:-translate-y-2 transform" href='/dashboard'>
             <h3 className="text-xl font-bold mb-3 text-indigo-500">Progress Dashboard</h3>
             <p className="text-gray-600">Monitor your preparation, track strengths & weaknesses, and stay motivated.</p>
-          </div>
+          </Link>
         </div>
       </section>
 
