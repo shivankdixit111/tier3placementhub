@@ -57,16 +57,16 @@ export default function Navbar() {
 
           {/* Notification & Profile */}
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
+            {/* <button
               type="button"
               className="relative rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
             >
               <span className="sr-only">View notifications</span>
               <BellIcon aria-hidden="true" className="h-6 w-6" />
-            </button>
+            </button> */}
 
             {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-3">
+            {/* <Menu as="div" className="relative ml-3">
               <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
                 <span className="sr-only">Open user menu</span>
                 <img
@@ -93,7 +93,7 @@ export default function Navbar() {
                   </a>
                 </MenuItem>
               </MenuItems>
-            </Menu>
+            </Menu> */}
           </div>
         </div>
       </div>

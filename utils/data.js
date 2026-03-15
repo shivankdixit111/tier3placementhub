@@ -1,7 +1,4 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-
-const examData = {
+export const examData = {
   "tcs-nqt": {
     name: "TCS NQT",
     syllabus: {
@@ -203,67 +200,3 @@ const examData = {
     },
   },
 };
-
-export default function ExamDetail() {
-  const { examId } = useParams();
-  const exam = examData[examId];
-
-  if (!exam) return <div className="text-center py-20">Exam not found!</div>;
-
-  return (
-    <div className="w-full min-h-screen bg-gray-50 py-16 px-6 max-w-6xl mx-auto">
-      <h1 className="text-4xl font-extrabold text-indigo-700 mb-10">{exam.name} - Full Syllabus</h1>
-
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Syllabus */}
-        <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-indigo-300 transition transform hover:-translate-y-2">
-          <h2 className="text-2xl font-semibold text-purple-600 mb-4">Syllabus</h2>
-          {Object.keys(exam.syllabus).map((section, idx) => (
-            <div key={idx} className="mb-4">
-              <h3 className="font-bold text-indigo-600">{section}</h3>
-              <ul className="list-disc list-inside text-gray-700">
-                {exam.syllabus[section].map((topic, tidx) => (
-                  <li key={tidx}>{topic}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Roadmap */}
-        <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-indigo-300 transition transform hover:-translate-y-2">
-          <h2 className="text-2xl font-semibold text-purple-600 mb-4">Roadmap</h2>
-          <ul className="list-disc list-inside text-gray-700">
-            {exam.roadmap.map((step, idx) => (
-              <li key={idx}>{step}</li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Resources */}
-        <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-indigo-300 transition transform hover:-translate-y-2">
-          <h2 className="text-2xl font-semibold text-purple-600 mb-4">Resources</h2>
-          {Object.keys(exam.resources).map((section, idx) => (
-            <div key={idx} className="mb-3">
-              <h3 className="font-bold text-indigo-600">{section}</h3>
-              <ul className="list-inside text-gray-700">
-                {exam.resources[section].map((res, ridx) => (
-                  <li key={ridx}>
-                    <a
-                      href={res.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-indigo-600 hover:underline"
-                    >
-                      {res.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}

@@ -1,57 +1,33 @@
-"use client";
+// remove "use client" !
 
 import React from "react";
+import {examData} from '../../../utils/data'
+import Link from 'next/link'
 
-const examData = {
-  "tcs-nqt": {
-    name: "TCS NQT",
-    syllabus: {
-      Aptitude: ["Time & Work", "Profit & Loss", "Percentage", "Ratio & Proportion"],
-      "Verbal Reasoning": ["Sentence Completion", "Reading Comprehension", "Grammar"],
-      "Advanced Quant": ["Probability", "Permutation & Combination", "Puzzles", "Data Interpretation"],
-      Coding: ["Arrays", "Strings", "Linked List", "Recursion", "Dynamic Programming", "Sorting & Searching"],
-    },
-    roadmap: [
-      "Week 1: Aptitude basics",
-      "Week 2: Verbal reasoning practice",
-      "Week 3: Advanced Quant practice",
-      "Week 4: Coding fundamentals + Mock tests",
-    ],
-    resources: {
-      Aptitude: [
-        { name: "Online Study for You", link: "https://www.youtube.com/c/OnlineStudyForYou" },
-        { name: "Campus Monk", link: "https://www.campusmonk.com/tcs-nqt" },
-      ],
-      "Verbal Reasoning": [
-        { name: "ExamRace Verbal", link: "https://www.youtube.com/c/ExamRace" },
-      ],
-      "Advanced Quant": [
-        { name: "Handa Ka Funda", link: "https://www.youtube.com/c/handakafunda" },
-      ],
-      Coding: [
-        { name: "Pepcoding", link: "https://www.youtube.com/c/pepcoding" },
-        { name: "CodeStudio", link: "https://www.codingninjas.com/codestudio" },
-      ],
-    },
-  },
-};
-
-export default function ExamDetail({ params }) {
-  const { examId } = params; // **Next.js App Router passes params here**
+export default async function ExamDetail({ params }) {
+  const { examId } = await params; // Server Component → params is accessible
   const exam = examData[examId];
 
   if (!exam) {
     return (
       <div className="flex items-center justify-center h-screen text-center">
-        <p className="text-2xl font-semibold text-red-500">
-          Exam "{examId}" not found!
-        </p>
+        <p className="text-2xl font-semibold text-red-500">Exam "{examId}" not found!</p>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white py-12 px-6 max-w-7xl mx-auto">
+      {/* Back Button */}
+      <div className="mb-6">
+        <Link
+          href="/preparation"
+          className="text-indigo-600 hover:text-purple-600 font-semibold underline"
+        >
+          ← Back to Preparation
+        </Link>
+      </div>
+
       <h1 className="text-5xl font-extrabold text-indigo-700 mb-12 text-center">
         {exam.name} - Full Syllabus 🚀
       </h1>
