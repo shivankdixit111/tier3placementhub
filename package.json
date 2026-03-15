@@ -12,6 +12,9 @@
     "@google/generative-ai": "^0.24.1",
     "@headlessui/react": "^2.2.9",
     "@heroicons/react": "^2.2.0",
+    "@langchain/openai": "^1.2.13",
+    "dotenv": "^17.3.1",
+    "langchain": "^1.2.32",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
