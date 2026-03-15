@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function MockInterview() {
   const questions = [
@@ -14,42 +14,51 @@ export default function MockInterview() {
   const [current, setCurrent] = useState(0);
   const [history, setHistory] = useState([]);
   const [listening, setListening] = useState(false);
-  const [userSpeech, setUserSpeech] = useState("");
+  const [speechSupported, setSpeechSupported] = useState(false);
 
-  // Speech Recognition
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = SpeechRecognition ? new SpeechRecognition() : null;
+  const recognitionRef = useRef(null);
 
+  // Initialize SpeechRecognition and handlers on client only
   useEffect(() => {
-    if (!recognition) return;
+    if (typeof window === "undefined") return;
 
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) return;
+
+    setSpeechSupported(true);
+
+    const recognition = new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = false;
     recognition.lang = "en-US";
 
     recognition.onresult = (event) => {
       const speech = event.results[0][0].transcript;
-      setUserSpeech(speech);
       setHistory((prev) => [
         ...prev,
-        { question: questions[current], answer: `🤖 AI: Good! Here's a hint: ${speech.slice(0, 20)}... think more clearly.` },
+        {
+          question: questions[current],
+          answer: `🤖 AI Hint: ${speech.slice(0, 30)}... think more clearly.`,
+        },
       ]);
-      speakAI(`Good! Here's a hint: ${speech.slice(0, 20)}... think more clearly.`);
-      setCurrent(current + 1);
+      speakAI(`Good! Here's a hint: ${speech.slice(0, 30)}... think more clearly.`);
+      setCurrent((prev) => prev + 1);
       setListening(false);
     };
 
     recognition.onerror = () => setListening(false);
+
+    recognitionRef.current = recognition;
   }, [current]);
 
   const startListening = () => {
-    if (!recognition) return;
+    if (!recognitionRef.current) return;
     setListening(true);
-    recognition.start();
+    recognitionRef.current.start();
   };
 
-  // Speech Synthesis
   const speakAI = (text) => {
+    if (typeof window === "undefined" || !window.speechSynthesis) return;
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-US";
     utterance.rate = 1;
@@ -61,6 +70,12 @@ export default function MockInterview() {
       <h1 className="text-4xl font-extrabold text-center text-indigo-700 mb-10">
         🎤 Mock Interview Call
       </h1>
+
+      {!speechSupported && (
+        <p className="text-red-500 text-center mb-6">
+          Your browser does not support Speech Recognition.
+        </p>
+      )}
 
       <div className="max-w-4xl mx-auto space-y-6">
         {history.map((item, idx) => (
@@ -77,7 +92,7 @@ export default function MockInterview() {
           </div>
         ))}
 
-        {current < questions.length && (
+        {current < questions.length && speechSupported && (
           <div className="text-center mt-4">
             <p className="mb-4 font-semibold text-lg text-gray-700">
               🎯 Next Question: {questions[current]}
