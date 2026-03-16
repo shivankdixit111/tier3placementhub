@@ -1,119 +1,39 @@
-"use client";
+import Link from "next/link";
 
-import { useState, useEffect, useRef } from "react";
+export default function MockHome() {
 
-export default function MockInterview() {
-  const questions = [
-    "Tell me about yourself",
-    "Why should we hire you?",
-    "What is DBMS?",
-    "Explain Operating System",
-    "Difference between stack and queue",
+  const interviews = [
+    { name: "HR Interview", type: "hr" },
+    { name: "Technical Interview", type: "technical" },
+    { name: "DSA Interview", type: "dsa" }
   ];
 
-  const [current, setCurrent] = useState(0);
-  const [history, setHistory] = useState([]);
-  const [listening, setListening] = useState(false);
-  const [speechSupported, setSpeechSupported] = useState(false);
-
-  const recognitionRef = useRef(null);
-
-  // Initialize SpeechRecognition and handlers on client only
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) return;
-
-    setSpeechSupported(true);
-
-    const recognition = new SpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = "en-US";
-
-    recognition.onresult = (event) => {
-      const speech = event.results[0][0].transcript;
-      setHistory((prev) => [
-        ...prev,
-        {
-          question: questions[current],
-          answer: `🤖 AI Hint: ${speech.slice(0, 30)}... think more clearly.`,
-        },
-      ]);
-      speakAI(`Good! Here's a hint: ${speech.slice(0, 30)}... think more clearly.`);
-      setCurrent((prev) => prev + 1);
-      setListening(false);
-    };
-
-    recognition.onerror = () => setListening(false);
-
-    recognitionRef.current = recognition;
-  }, [current]);
-
-  const startListening = () => {
-    if (!recognitionRef.current) return;
-    setListening(true);
-    recognitionRef.current.start();
-  };
-
-  const speakAI = (text) => {
-    if (typeof window === "undefined" || !window.speechSynthesis) return;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "en-US";
-    utterance.rate = 1;
-    window.speechSynthesis.speak(utterance);
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white p-8">
-      <h1 className="text-4xl font-extrabold text-center text-indigo-700 mb-10">
-        🎤 Mock Interview Call
+    <div className="min-h-screen bg-gradient-to-r from-indigo-500 to-purple-600 flex flex-col items-center justify-center text-white">
+
+      <h1 className="text-5xl font-bold mb-8">
+        AI Mock Interview
       </h1>
 
-      {!speechSupported && (
-        <p className="text-red-500 text-center mb-6">
-          Your browser does not support Speech Recognition.
-        </p>
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-      <div className="max-w-4xl mx-auto space-y-6">
-        {history.map((item, idx) => (
-          <div
-            key={idx}
-            className="flex flex-col md:flex-row gap-4 bg-white p-6 rounded-2xl shadow-lg hover:shadow-indigo-300 transition transform hover:-translate-y-1"
-          >
-            <div className="md:w-1/2">
-              <p className="font-semibold text-indigo-600 mb-2">Q: {item.question}</p>
+        {interviews.map((i) => (
+          <Link key={i.type} href={`/mock/${i.type}`}>
+
+            <div className="bg-white text-indigo-700 p-8 rounded-xl shadow-xl cursor-pointer hover:scale-105 transition">
+
+              <h2 className="text-2xl font-bold">{i.name}</h2>
+              <p className="mt-2 text-gray-600">
+                Practice AI powered interview
+              </p>
+
             </div>
-            <div className="md:w-1/2 bg-indigo-50 p-4 rounded-xl text-gray-800">
-              <p>{item.answer}</p>
-            </div>
-          </div>
+
+          </Link>
         ))}
 
-        {current < questions.length && speechSupported && (
-          <div className="text-center mt-4">
-            <p className="mb-4 font-semibold text-lg text-gray-700">
-              🎯 Next Question: {questions[current]}
-            </p>
-            <button
-              onClick={startListening}
-              className={`${
-                listening ? "bg-red-500" : "bg-indigo-600"
-              } text-white px-6 py-3 rounded-xl shadow-lg hover:scale-105 transition transform`}
-            >
-              {listening ? "Listening..." : "Speak Your Answer"}
-            </button>
-          </div>
-        )}
-
-        {current === questions.length && (
-          <div className="text-center text-green-700 font-semibold text-xl mt-6">
-            🎉 You have completed the mock interview!
-          </div>
-        )}
       </div>
+
     </div>
   );
 }
