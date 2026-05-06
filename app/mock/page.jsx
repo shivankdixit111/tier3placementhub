@@ -12,7 +12,7 @@ export default function MockHome() {
     <div className="min-h-screen bg-gradient-to-r from-indigo-500 to-purple-600 flex flex-col items-center justify-center text-white">
 
       <h1 className="text-5xl font-bold mb-8">
-        AI Mock Interview
+        Mock Interview
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -24,7 +24,7 @@ export default function MockHome() {
 
               <h2 className="text-2xl font-bold">{i.name}</h2>
               <p className="mt-2 text-gray-600">
-                Practice AI powered interview
+                Practice mock interview
               </p>
 
             </div>

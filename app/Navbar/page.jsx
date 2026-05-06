@@ -7,7 +7,7 @@ const navigation = [
   { name: 'Preparation', href: '/preparation' },
   { name: 'AI Assistant', href: '/ai' },
   { name: 'Mock Interview', href: '/mock' },
-  { name: 'Dashboard', href: '/dashboard' },
+  // { name: 'Dashboard', href: '/dashboard' },
 ]
 
 function classNames(...classes) {

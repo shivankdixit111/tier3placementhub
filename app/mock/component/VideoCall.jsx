@@ -15,7 +15,7 @@ export default function VideoCall() {
       const domain = "meet.jit.si";
 
       new window.JitsiMeetExternalAPI(domain, {
-        roomName: "AI-Mock-Interview",
+        roomName: "Mock-Interview",
         width: "100%",
         height: 400,
         parentNode: document.querySelector("#video-container"),
